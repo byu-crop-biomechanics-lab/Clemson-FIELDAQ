@@ -1,16 +1,22 @@
 {
     "operator": 0,
-    "height": 0.0544,
+    "height": 95.5,
     "plot_num": 0,
     "barcode_scan": "OFF",
     "height_sensor": "OFF",
-    "folder": "clemson",
+    "folder": "shingi",
+    "folders": [
+        "gladys",
+        "shingi",
+        "tendy",
+        "tsvangson"
+    ],
     "notes": {
         "pretest": [],
         "posttest": [],
         "bank": []
     },
     "break_height": "N/A",
-    "curr_test_num": 1,
+    "curr_test_num": 2,
     "sensors": {}
 }
