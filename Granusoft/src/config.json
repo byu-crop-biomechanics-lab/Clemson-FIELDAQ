@@ -1,0 +1,16 @@
+{
+    "operator": 0,
+    "height": 0.0544,
+    "plot_num": 0,
+    "barcode_scan": "OFF",
+    "height_sensor": "OFF",
+    "folder": "clemson",
+    "notes": {
+        "pretest": [],
+        "posttest": [],
+        "bank": []
+    },
+    "break_height": "N/A",
+    "curr_test_num": 1,
+    "sensors": {}
+}
