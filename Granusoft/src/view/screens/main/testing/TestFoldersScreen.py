@@ -38,25 +38,6 @@ class FolderList(SingleSelectableList):
     def update(self, k, val):
         self.data = [{'text': str(x)} for x in self.list_data]
 
-'''
-'''
-class SaveTestDialog(Popup):
-    '''A dialog to save a file.  The save and cancel properties point to the
-    functions called when the save or cancel buttons are pressed.'''
-    save = ObjectProperty(None)
-    cancel = ObjectProperty(None)
-
-class SaveConfirmDialog(Popup):
-    '''A dialog to save a file.  The save and cancel properties point to the
-    functions called when the save or cancel buttons are pressed.'''
-    save = ObjectProperty(None)
-    pathSelector = ObjectProperty(None)
-    cancel = ObjectProperty(None)
-
-class NoUsbDialog(Popup):
-    '''A dialog to save a file.  The save and cancel properties point to the
-    functions called when the save or cancel buttons are pressed.'''
-    cancel = ObjectProperty(None)
 
 class TestFoldersScreen(BaseScreen):
     USB_TEST_FOLDERS_PATH = '/mnt/usbStick'
@@ -66,11 +47,9 @@ class TestFoldersScreen(BaseScreen):
         self.back_button = GranuSideButton(text = 'Back')
         self.back_button.bind(on_release = self.go_back)
         self.delete_button = GranuSideButton(text = 'Delete\nFolder')
-        self.delete_button.bind(on_release = self.remove_tests)
-        self.export_button = GranuSideButton(text = 'Export\nFolder')
-        self.export_button.bind(on_release = self.export_tests)
+        self.delete_button.bind(on_release = self.delete_folder)
         self.view_tests_button = GranuSideButton(text = 'View\nTests')
-        self.view_tests_button.bind(on_release = self.to_test_details)
+        self.view_tests_button.bind(on_release = self.view_tests)
         def gui_init(dt):
             self.test_details_screen = self.manager.get_screen('test_detail_screen')
             self.parent_screen = self
@@ -88,75 +67,13 @@ class TestFoldersScreen(BaseScreen):
         super(TestFoldersScreen, self).back()
 
     def delete_folder(self, obj):
-        super(TestFoldersScreen, self).move_to('test_archive_confirmation')
+        super(TestFoldersScreen, self).move_to('delete_folder_confirmation')
 
-    def export_tests(self, obj):
-        if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
-            try:
-                os.system("sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /mnt/usbStick")
-            except:
-                print("USB Not Mounted")
-        self._popup = SaveConfirmDialog(save=self.usbSave, pathSelector=self.pathSelector, cancel=self.dismiss_popup)
-        self._popup.open()
-        # print("We should export all tests!")
-
-    def pathSelector(self): # , obj):
-        self.dismiss_popup()
-        self._popup = SaveTestDialog(save=self.save, cancel=self.dismiss_popup)
-        self._popup.open()
-
-    def usbSave(self, path):
-        if os.path.ismount(self.USB_TEST_FOLDERS_PATH):
-            self.save(path)
-        else:
-            self.noUSB()
-
-    def noUSB(self):
-        self.dismiss_popup()
-        self._popup = NoUsbDialog(cancel=self.dismiss_popup)
-        self._popup.open()
-
-    def save(self, path):
-        dt = datetime.datetime.now()
-        configName = 'config_' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '.txt'
-        subFold = 'Tests_' + dt.strftime('%Y_%m_%d')
-        try:
-            if not os.path.exists(path+'/'+subFold):
-                os.makedirs(path + '/' + subFold)
-                os.makedirs('TestArchive/' + subFold)
-        except:
-            pass
-        try:
-            config.save_as(os.path.join(path + '/' + subFold, configName))
-            for name in self.test_folder_names:
-                if name != '.gitignore':
-                    copyfile('Tests/' + name, path + '/' + subFold + "/" + name)
-                    # os.remove('Tests/' + name)
-                    os.rename('Tests/' + name, 'TestArchive/' + subFold + '/' + name)
-                self.dismiss_popup()
-        except:
-            config.save_as(os.path.join(path, configName))
-            for name in self.test_folder_names:
-                if name != '.gitignore':
-                    copyfile('Tests/' + name, path + '/' + name)
-                    # os.remove('Tests/' + name)
-                    os.rename('Tests/' + name, 'TestArchive/' + subFold + '/' + name)
-                self.dismiss_popup()
-        self.test_folder_names = [f for f in listdir("Tests") if (isdir(join("Tests", f)) and f != ".gitignore")]
-        self.ids['tests_list'].list_data = self.test_filenames
-
-    def set_folder_name(self):
-        ts = Folder()
-        filename = self.ids['folders_list'].remove_selected()
-        ts.set_test_details_name(filename[0])
-
-    def to_test_details(self, obj):
-        selected = self.test_list.get_selected()
+    def view_tests(self, obj):
+        selected = self.folder_list.get_selected()
         self.test_details_screen.set_file(selected)
         self.test_list.clear_selection()
         self.parent_screen.move_to('test_detail_screen')
-
-    # Button Changes
 
     def default_folders_buttons(self):
         buttons = self.ids['folders_buttons']
@@ -169,7 +86,6 @@ class TestFoldersScreen(BaseScreen):
         buttons.clear_widgets()
         buttons.add_widget(self.back_button)
         buttons.add_widget(self.view_tests_button)
-        buttons.add_widget(self.export_button)
         buttons.add_widget(self.delete_button)
         
 
