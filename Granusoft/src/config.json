@@ -3,7 +3,7 @@
     "height": 95.5,
     "plot_num": 0,
     "barcode_scan": "OFF",
-    "height_sensor": "ON",
+    "height_sensor": "OFF",
     "folder": "shingi",
     "folders": [
         "gladys",
