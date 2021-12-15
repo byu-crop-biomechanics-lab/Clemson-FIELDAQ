@@ -74,7 +74,8 @@ class TestsScreen(BaseScreen):
         Clock.schedule_once(gui_init)
 
     def on_pre_enter(self):
-        self.test_filenames = [f for f in listdir("Tests") if (isfile(join("Tests", f)) and f != ".gitignore")]
+        foldername = "Tests/"+config.get('selected_folder',0)
+        self.test_filenames = [f for f in listdir(foldername) if (isfile(join(foldername, f)) and f != ".gitignore")]
 
         self.default_buttons()
 

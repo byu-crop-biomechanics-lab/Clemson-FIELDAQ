@@ -30,7 +30,6 @@ Builder.load_file('view/screens/main/testing/TestDetailScreen.kv')
 
 ONE_SEC = 1
 
-
 class TestDetailScreen(BaseScreen):
     x_max = NumericProperty(1)
     y_max = NumericProperty(1)
@@ -53,13 +52,15 @@ class TestDetailScreen(BaseScreen):
         self.screenTitle = self.ids['testTitle']
 
     def on_enter(self):
+
         self.graph = self.ids['graph_test']
         self.results_plot = MeshLinePlot(color=[1, 1, 1, 1])
         self.screenTitle.text = str(self.fileName[:-4])
         self.toggle_button = self.ids['imu_pot_toggle']
         self.toggle_button.bind(on_release = self.toggleButton)
         self.title_Text = self.ids['title_text']
-        with open('Tests/' + str(self.fileName)) as testFile:
+        foldername = "Tests/"+config.get('selected_folder',0)+'/'
+        with open(foldername + str(self.fileName)) as testFile:
             readCSV = csv.reader(testFile, delimiter=',')
             testData = 0
             for row in readCSV:

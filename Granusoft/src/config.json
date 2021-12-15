@@ -3,13 +3,14 @@
     "height": 95.5,
     "plot_num": 0,
     "barcode_scan": "OFF",
-    "height_sensor": "OFF",
-    "folder": "shingi",
+    "height_sensor": "ON",
+    "folder": "carnegie",
+    "selected_folder": "carnegie",
+    "unwanted_folder": "NYU",
     "folders": [
-        "gladys",
-        "shingi",
-        "tendy",
-        "tsvangson"
+        "carnegie",
+        "UoI",
+        "BYU"
     ],
     "notes": {
         "pretest": [],
@@ -17,6 +18,6 @@
         "bank": []
     },
     "break_height": "N/A",
-    "curr_test_num": 2,
+    "curr_test_num": 6,
     "sensors": {}
 }

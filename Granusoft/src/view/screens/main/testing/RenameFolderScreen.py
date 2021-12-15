@@ -11,14 +11,15 @@ import configurator as config
 from view.BaseScreen import BaseScreen
 from view.input.StrInput import StrInput
 
-Builder.load_file('view/screens/main/testing/FolderScreen.kv')
+Builder.load_file('view/screens/main/testing/RenameFolderScreen.kv')
 
-class FolderScreen(BaseScreen):
+class RenameFolderScreen(BaseScreen):
     def on_pre_enter(self):
         """Before the Screen loads, read the configuration file to get the current
         operator and set the TextInput text."""
         input = self.ids['folder']
-        input.text = str(config.get('folder', "Default Folder"))
+        input.text = str(config.get('selected_folder', "Default Folder"))
+        self.previous_name = input.text
         input.validate()
 
     def on_enter(self):
@@ -26,17 +27,17 @@ class FolderScreen(BaseScreen):
         input = self.ids['folder']
         input.focus = True
 
-
     def save(self):
         """Save button was pressed: save the new operator in the configuration file."""
         folder_list = config.get('folders',0)
         input = self.ids['folder']
         valid = input.validate()
         if valid:
-            config.set('folder', str(input.text))
+            os.rename('Tests/'+self.previous_name,"Tests/"+str(input.text))
+            config.set('selected_folder', str(input.text))
             if str(input.text) not in folder_list:
-                os.mkdir('Tests/'+str(config.get('folder', 0)))
                 folder_list.append(str(input.text))
+                folder_list.remove(self.previous_name)
                 config.set('folders', folder_list)
             return True
         else:
