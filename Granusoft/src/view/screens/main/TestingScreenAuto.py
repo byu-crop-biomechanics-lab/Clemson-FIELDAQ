@@ -15,14 +15,14 @@ import configurator as config
 from view.elements import *
 import datetime
 
-Builder.load_file('view/screens/main/TestingScreen.kv')
+Builder.load_file('view/screens/main/TestingScreenAuto.kv')
 
 ONE_SEC = 1
 
 
-class TestingScreen(BaseScreen):
+class TestingScreenAuto(BaseScreen):
     load_cell_height = StringProperty("N/A")
-    loadCellHeightUnits = " cm"
+    loadCellHeightUnits = " çm"
     plot = StringProperty("N/A")
     operator = StringProperty("N/A")
     time = StringProperty("N/A")
@@ -35,7 +35,7 @@ class TestingScreen(BaseScreen):
         """Before the Screen loads, read the configuration file to get the current
         list of notes. Show the default buttons."""
         self.event = Clock.schedule_interval(self.update_time, ONE_SEC)
-        self.load_cell_height = self.get_height()
+        self.load_cell_height = self.get_load_cell_sensor_height()
         config.set('height', float(self.load_cell_height))
         self.plot = str(config.get('plot_num', 0))
         self.operator = str(config.get('operator', 'N/A'))
@@ -55,9 +55,20 @@ class TestingScreen(BaseScreen):
     def update_time(self, obj):
         self.time = datetime.datetime.now().strftime("%I:%M %p")
         self.date_time = self.current_date+": "+self.time
+        self.load_cell_height = self.get_load_cell_sensor_height()
 
     def on_leave(self):
         self.event.cancel()
 
-    def get_height(self):
-        return str(config.get('height', 0))
+    def get_load_cell_sensor_height(self):
+        sensor = Sensor()
+        if sensor.REAL_DATA is False:
+            adc_out = 1
+        else:
+            adc_out = 0
+        sensor.get_header_data()
+        sensor_data = sensor.get_sensor_data(adc_out)
+        return str("%.2f" % sensor_data["Load Cell Height"])
+
+    def save_current_height(self):
+        config.set('height', float(input.text))

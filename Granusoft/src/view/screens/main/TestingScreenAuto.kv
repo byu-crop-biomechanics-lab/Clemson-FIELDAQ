@@ -12,8 +12,8 @@
             pos: self.pos
             size: self.size
 
-<TestingScreen>:
-	name: 'testing_screen'
+<TestingScreenAuto>:
+	name: 'testing_screen_auto'
     GranuContainer:
         GranuSideArea:
             GranuSideButton:
@@ -39,11 +39,10 @@
             GridLayout:
                 cols: 2
                 spacing: 10
-                SettingsButton:
+                TestingInfoBox:
                     font_size: 20
+                    id: load_cell_height
                     text: "Load Cell Height: \n" + root.load_cell_height + root.loadCellHeightUnits
-                    on_release:
-                        root.move_to('height_screen')
                 SettingsButton:
                     font_size: 20
                     text: "Operator: \n" + root.operator

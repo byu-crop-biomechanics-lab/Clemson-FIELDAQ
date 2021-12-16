@@ -1,16 +1,16 @@
 {
     "operator": 0,
-    "height": 95.5,
+    "height": 23.0,
     "plot_num": 0,
     "barcode_scan": "OFF",
     "height_sensor": "OFF",
-    "folder": "carnegie",
+    "folder": "ASU",
     "selected_folder": "UoI",
-    "unwanted_folder": "NYU",
+    "unwanted_folder": "ASU",
     "folders": [
-        "carnegie",
         "UoI",
-        "BYU"
+        "BYU",
+        "Scranton"
     ],
     "notes": {
         "pretest": [],
@@ -18,6 +18,6 @@
         "bank": []
     },
     "break_height": "N/A",
-    "curr_test_num": 6,
+    "curr_test_num": 1,
     "sensors": {}
 }
