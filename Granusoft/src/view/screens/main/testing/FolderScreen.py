@@ -35,7 +35,10 @@ class FolderScreen(BaseScreen):
         if valid:
             config.set('folder', str(input.text))
             if str(input.text) not in folder_list:
-                os.mkdir('Tests/'+str(config.get('folder', 0)))
+                try:
+                    os.mkdir('Tests/'+str(config.get('folder', 0)))
+                except:
+                    pass
                 folder_list.append(str(input.text))
                 config.set('folders', folder_list)
             return True

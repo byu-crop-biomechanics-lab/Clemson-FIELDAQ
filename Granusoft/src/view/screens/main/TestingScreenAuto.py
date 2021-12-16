@@ -6,8 +6,10 @@ from kivy.lang import Builder
 from kivy.properties import NumericProperty
 from kivy.properties import StringProperty
 from kivy.properties import ListProperty
+from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 from Sensor import Sensor
+from kivy.uix.popup import Popup
 
 from view.BaseScreen import BaseScreen
 from view.StaticList import StaticList
@@ -18,6 +20,11 @@ import datetime
 Builder.load_file('view/screens/main/TestingScreenAuto.kv')
 
 ONE_SEC = 1
+
+class HeightChangeConfirmDialog(Popup):
+    save = ObjectProperty(None)
+    pathSelector = ObjectProperty(None)
+    cancel = ObjectProperty(None)
 
 
 class TestingScreenAuto(BaseScreen):
@@ -72,3 +79,12 @@ class TestingScreenAuto(BaseScreen):
 
     def save_current_height(self):
         config.set('height', float(input.text))
+
+    def export_tests(self, obj):
+            if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
+                try:
+                    os.system("sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /mnt/usbStick")
+                except:
+                    print("USB Not Mounted")
+            self._popup = SaveConfirmDialog(save=self.usbSave, pathSelector=self.pathSelector, cancel=self.dismiss_popup)
+            self._popup.open()

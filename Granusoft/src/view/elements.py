@@ -30,3 +30,6 @@ class GranuContent(BoxLayout):
 
 class GranuTitle(Label):
     pass
+
+class GranuSideAreaTest(GridLayout):
+    pass
