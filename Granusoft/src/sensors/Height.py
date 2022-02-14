@@ -8,8 +8,8 @@ class HeightPoT:
         self.height_pot = 0.0
         self.height_pot_adc = 0.0
         try:
-            self.slope = self.config_data['Load Cell Height']['slope']
-            self.intercept = self.config_data['Load Cell Height']['intercept']
+            self.slope = self.config_data['Load Cell\nHeight']['slope']
+            self.intercept = self.config_data['Load Cell\nHeight']['intercept']
         except:
             self.slope = 1.0
             self.intercept = 0.0
@@ -30,10 +30,12 @@ class HeightPoT:
     
     
     def interpolate_height_data(self, x):
-
-            self.points_list = self.config_data['Load Cell Height']['points_list']
-            adc_points = [x[0] for x in self.points_list]
-            real_points = [x[1] for x in self.points_list]
+            try:
+                self.points_list = self.config_data['Load Cell\nHeight']['points_list']
+                adc_points = [x[0] for x in self.points_list]
+                real_points = [x[1] for x in self.points_list]
+            except:
+                return x*self.slope+self.intercept
 
             if x > max(adc_points) or x < min(adc_points) or len(adc_points)<3:
                 return x*self.slope+self.intercept

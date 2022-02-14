@@ -37,7 +37,6 @@ class Sensor:
         self.imu_fake = 0
 
     def get_header_data(self):
-        self.sensor_data["Load Cell Height"] = 0
         self.sensor_data["Location"] = self.location.get_data()
 
     def get_sensor_data(self, adc_out = 0):
