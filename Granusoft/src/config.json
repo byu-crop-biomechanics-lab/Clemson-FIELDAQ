@@ -1,12 +1,12 @@
 {
     "operator": 0,
-    "height": 95.5,
+    "height": 0,
     "plot_num": 0,
     "barcode_scan": "OFF",
     "height_sensor": "OFF",
-    "folder": "ASU",
-    "selected_folder": "ASU",
-    "unwanted_folder": "BYU",
+    "folder": " ",
+    "selected_folder": " ",
+    "unwanted_folder": " ",
     "folders": [],
     "notes": {
         "pretest": [],
