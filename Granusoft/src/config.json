@@ -6,18 +6,14 @@
     "height_sensor": "OFF",
     "folder": "ASU",
     "selected_folder": "ASU",
-    "unwanted_folder": "NYU",
-    "folders": [
-        "UoI",
-        "BYU",
-        "ASU"
-    ],
+    "unwanted_folder": "BYU",
+    "folders": [],
     "notes": {
         "pretest": [],
         "posttest": [],
         "bank": []
     },
     "break_height": "N/A",
-    "curr_test_num": 3,
+    "curr_test_num": 1,
     "sensors": {}
 }
