@@ -121,6 +121,7 @@ class TestsScreen(BaseScreen):
         dt = datetime.datetime.now()
         configName = 'config_' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '.txt'
         subFold = 'Tests_' + dt.strftime('%Y_%m_%d')
+        foldername = config.get('selected_folder',0)
         try:
             if not os.path.exists(path+'/'+subFold):
                 os.makedirs(path + '/' + subFold)
@@ -131,7 +132,7 @@ class TestsScreen(BaseScreen):
             config.save_as(os.path.join(path + '/' + subFold, configName))
             for name in self.test_filenames:
                 if name != '.gitignore':
-                    copyfile('Tests/' + name, path + '/' + subFold + "/" + name)
+                    copyfile('Tests/' + foldername+'/'+ name, path + '/' + subFold + "/" + name)
                     # os.remove('Tests/' + name)
                     os.rename('Tests/' + name, 'TestArchive/' + subFold + '/' + name)
                 self.dismiss_popup()
@@ -139,9 +140,10 @@ class TestsScreen(BaseScreen):
             config.save_as(os.path.join(path, configName))
             for name in self.test_filenames:
                 if name != '.gitignore':
-                    copyfile('Tests/' + name, path + '/' + name)
+                    print(path)
+                    copyfile('Tests/'+foldername+'/' + name, path + '/' + name)
                     # os.remove('Tests/' + name)
-                    os.rename('Tests/' + name, 'TestArchive/' + subFold + '/' + name)
+                    os.rename('Tests/'+foldername+'/' + name, 'TestArchive/' + subFold + '/' + name)
                 self.dismiss_popup()
         self.test_filenames = [f for f in listdir("Tests") if (isfile(join("Tests", f)) and f != ".gitignore")]
         self.ids['tests_list'].list_data = self.test_filenames
