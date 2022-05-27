@@ -55,17 +55,11 @@ class SaveScreen(BaseScreen):
         # Sets the filename to save the csv file as
         folder_name = 'Tests/'+str(config.get('folder', 0))
 
-        try:
-            config.set('curr_test_num', 1)
-            filename = folder_name+'/' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '_P' + str(config.get('plot_num', 0)) \
-            + '_T' + str(config.get('curr_test_num', 0)).zfill(2) + '.csv'
+        #try:
+        config.set('curr_test_num', (config.get('curr_test_num', 0) + 1))
+        filename = folder_name+'/' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '_P' + str(config.get('plot_num', 0)) \
+        + '_T' + str(config.get('curr_test_num', 0)).zfill(2) + '.csv'
             
-        except:
-            mkdir(folder_name)
-            config.set('curr_test_num', len(listdir(folder_name)) + 1)
-            filename = folder_name+'/' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '_P' + str(config.get('plot_num', 0)) \
-            + '_T' + str(config.get('curr_test_num', 0)).zfill(2) + '.csv'
-
         try:
             gps.update()
         except:
