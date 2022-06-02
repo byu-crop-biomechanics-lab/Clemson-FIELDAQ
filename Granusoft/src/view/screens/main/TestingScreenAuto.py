@@ -15,11 +15,13 @@ from view.BaseScreen import BaseScreen
 from view.StaticList import StaticList
 import configurator as config
 from view.elements import *
+
 import datetime
 
 Builder.load_file('view/screens/main/TestingScreenAuto.kv')
 
 ONE_SEC = 1
+HEIGHT_INTERVAL = .5
 
 class HeightChangeConfirmDialog(Popup):
     save = ObjectProperty(None)
@@ -28,8 +30,9 @@ class HeightChangeConfirmDialog(Popup):
 
 
 class TestingScreenAuto(BaseScreen):
+    sensor = Sensor()
     load_cell_height = StringProperty("N/A")
-    loadCellHeightUnits = " çm"
+    loadCellHeightUnits = " cm"
     plot = StringProperty("N/A")
     operator = StringProperty("N/A")
     time = StringProperty("N/A")
@@ -38,10 +41,14 @@ class TestingScreenAuto(BaseScreen):
     folder = StringProperty("N/A")
     datasets = []
 
+
+
+
     def on_pre_enter(self):
         """Before the Screen loads, read the configuration file to get the current
         list of notes. Show the default buttons."""
         self.event = Clock.schedule_interval(self.update_time, ONE_SEC)
+        self.event2 = Clock.schedule_interval(self.update_height, HEIGHT_INTERVAL)
         self.load_cell_height = self.get_load_cell_sensor_height()
         config.set('height', float(self.load_cell_height))
         self.plot = str(config.get('plot_num', 0))
@@ -62,20 +69,17 @@ class TestingScreenAuto(BaseScreen):
     def update_time(self, obj):
         self.time = datetime.datetime.now().strftime("%I:%M %p")
         self.date_time = self.current_date+": "+self.time
+
+    def update_height(self,obj):
         self.load_cell_height = self.get_load_cell_sensor_height()
 
     def on_leave(self):
         self.event.cancel()
 
     def get_load_cell_sensor_height(self):
-        sensor = Sensor()
-        if sensor.REAL_DATA is False:
-            adc_out = 1
-        else:
-            adc_out = 0
-        sensor.get_header_data()
-        sensor_data = sensor.get_sensor_data(adc_out)
+        sensor_data = self.sensor.get_sensor_data(0)
         return str("%.2f" % sensor_data["Load Cell Height"])
+
 
     def save_current_height(self):
         config.set('height', float(input.text))
