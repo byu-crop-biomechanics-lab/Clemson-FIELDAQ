@@ -21,7 +21,7 @@ import datetime
 Builder.load_file('view/screens/main/TestingScreenAuto.kv')
 
 ONE_SEC = 1
-HEIGHT_INTERVAL = .5
+HEIGHT_INTERVAL = .003
 
 class HeightChangeConfirmDialog(Popup):
     save = ObjectProperty(None)
