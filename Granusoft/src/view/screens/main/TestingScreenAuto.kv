@@ -52,8 +52,8 @@
             GranuSideButton:
                 text: "Start"
                 on_release:
-                    root.save_current_height()
-                    root.move_to('test_in_progress_screen') # Move to test in progress screen
+                    root.check_height_change()
+                    root.move_to(root.next_screen) # Move to test in progress screen
             GranuSideButton:
                 text: "Tests"
                 on_release:

@@ -24,9 +24,8 @@ ONE_SEC = 1
 HEIGHT_INTERVAL = 0.004
 
 class HeightChangeConfirmDialog(Popup):
-    save = ObjectProperty(None)
-    pathSelector = ObjectProperty(None)
     cancel = ObjectProperty(None)
+    proceed = ObjectProperty(None)
 
 
 class TestingScreenAuto(BaseScreen):
@@ -81,8 +80,28 @@ class TestingScreenAuto(BaseScreen):
         return str("%.2f" % sensor_data["Load Cell Height"])
 
 
-    def save_current_height(self):
+    def save_new_height(self):
         config.set('height', float(self.load_cell_height))
+        self.next_screen = 'test_in_progress_screen'
+
+    def check_height_change(self):
+        current_height = float(config.get('height', 0))
+        difference = 2.5
+        new_height = float(self.load_cell_height) 
+        if new_height > current_height + difference or new_height < current_height - difference:
+            self.height_change_popup()
+        else:
+            config.set('height', float(self.load_cell_height))
+            self.next_screen = 'test_in_progress_screen'
+
+
+    def height_change_popup(self):
+        self._popup = HeightChangeConfirmDialog(cancel=self.dismiss_popup, proceed=self.save_new_height)
+        self._popup.open()
+
+    def dismiss_popup(self):
+        self.next_screen = 'testing_screen_auto'
+        self._popup.dismiss()
 
     def export_tests(self, obj):
             if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
