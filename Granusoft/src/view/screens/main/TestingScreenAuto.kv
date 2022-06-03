@@ -16,10 +16,10 @@
     size_hint: (0.55, 0.77)
     markup: True
     bold: True
-    title: 'Save Tests'
+    title: 'LOAD CELL HEIGHT CHANGE'
     title_align: 'center'
     title_size: '26sp'
-    # size_hint: (0.5, 0.7)
+
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -27,21 +27,18 @@
             markup: True
             bold: True
             halign: 'left'
-            text: "To save tests to USB:\n      select 'Save to USB'\nTo select another save location:\n      select 'Choose Location'\nTo cancel:\n      select 'Cancel'"
+            text: "You Are About Change the Load Cell Height, Continue?"
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: None
             size_hint_x: 1
             height: 65
             NavButton:
-                text: "Cancel"
+                text: "NO"
                 on_release: root.cancel()
             NavButton:
-                text: "Choose\nLocation"
+                text: "YES"
                 on_release: root.pathSelector()
-            NavButton:
-                text: "Save to\nUSB"
-                on_release: root.save('/mnt/usbStick')
 
 
 <TestingScreenAuto>:
@@ -55,6 +52,7 @@
             GranuSideButton:
                 text: "Start"
                 on_release:
+                    root.save_current_height()
                     root.move_to('test_in_progress_screen') # Move to test in progress screen
             GranuSideButton:
                 text: "Tests"

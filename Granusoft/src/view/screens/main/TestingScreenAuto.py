@@ -21,7 +21,7 @@ import datetime
 Builder.load_file('view/screens/main/TestingScreenAuto.kv')
 
 ONE_SEC = 1
-HEIGHT_INTERVAL = .003
+HEIGHT_INTERVAL = 0.004
 
 class HeightChangeConfirmDialog(Popup):
     save = ObjectProperty(None)
@@ -82,7 +82,7 @@ class TestingScreenAuto(BaseScreen):
 
 
     def save_current_height(self):
-        config.set('height', float(input.text))
+        config.set('height', float(self.load_cell_height))
 
     def export_tests(self, obj):
             if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
