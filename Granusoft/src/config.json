@@ -2,7 +2,7 @@
     "operator": 0,
     "height": 95.5,
     "plot_num": 1,
-    "barcode_scan": "OFF",
+    "barcode_scan": "ON",
     "height_sensor": "ON",
     "folder": "Test",
     "selected_folder": "Test",
@@ -24,6 +24,6 @@
         "bank": []
     },
     "break_height": "N/A",
-    "curr_test_num": 2,
+    "curr_test_num": 11,
     "sensors": {}
 }

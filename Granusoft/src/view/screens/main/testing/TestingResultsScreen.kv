@@ -27,7 +27,8 @@
             GranuSideButton:
                 text: 'Reject'
 	    		on_release:
-                    root.move_to('testing_screen') # Move to main screen
+                    root.check_height_sensor_status()
+                    root.move_to(root.next_screen) # Move to main screen
             GranuSideButton:
                 text: 'Save'
 	    		on_release:

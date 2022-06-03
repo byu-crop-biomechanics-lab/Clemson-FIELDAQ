@@ -115,3 +115,8 @@ class TestingResultsScreen(BaseScreen):
             self.graph.add_plot(self.plot_imu)
             self.toggle = 1
 
+    def check_height_sensor_status(self):
+        if str(config.get('height_sensor', 0)) == "ON":
+            self.next_screen = 'testing_screen_auto'
+        else:
+            self.next_screen = 'testing_screen'

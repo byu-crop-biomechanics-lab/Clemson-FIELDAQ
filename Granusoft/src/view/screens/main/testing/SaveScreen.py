@@ -28,7 +28,8 @@ class SaveScreen(BaseScreen):
 
         if use_barcode == "OFF":
             self.save_test()
-            super(SaveScreen, self).move_to('testing_screen')
+            self.check_height_sensor_status()
+            super(SaveScreen, self).move_to(self.next_screen)
 
     def on_enter(self):
         """Once the Screen loads, focus the TextInput"""
@@ -130,7 +131,9 @@ class SaveScreen(BaseScreen):
 
         csvFile.close()
 
-        if self.use_height_sensor == "OFF":
-            self.testing_screen = "testing_screen"
+
+    def check_height_sensor_status(self):
+        if str(config.get('height_sensor', 0)) == "ON":
+            self.next_screen = 'testing_screen_auto'
         else:
-            self.testing_screen = "testing_screen_auto"
+            self.next_screen = 'testing_screen'
