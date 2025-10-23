@@ -12,7 +12,8 @@ class Sensor:
         self.cpu_time = 0
         self.temp_fake = 0
         self.hum_fake = 0
-        self.loc_fake = [40.2463, -111.6475]
+        #self.loc_fake = [40.2463, -111.6475]
+        self.loc_fake=[24.52485137129533, 54.434341223292826]
         self.x_fake = 0
         self.y_fake = 0
         self.pot_fake = 22.5

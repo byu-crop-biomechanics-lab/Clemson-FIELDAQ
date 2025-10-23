@@ -11,6 +11,8 @@ from kivy.clock import Clock
 from view.BaseScreen import BaseScreen
 from Sensor import Sensor
 import datetime
+# import pytz
+# from timezonefinder import TimezoneFinder
 
 Builder.load_file('view/screens/main/MainScreen.kv')
 
@@ -23,8 +25,11 @@ class MainScreen(BaseScreen):
     time = StringProperty("0")
     current_date = StringProperty("DD/MM/YYYY")
     load_cell_height = StringProperty("0.00")
+    #time_zone = StringProperty("N/A")
     loadCellHeightUnits = 'cm'
+
     def on_pre_enter(self):
+        #self.time_zone = self.find_time_zone()
         self.test_time = 0
         self.event = Clock.schedule_interval(self.update_time, INTERVAL)
         self.event2 = Clock.schedule_interval(self.update_values, INTERVAL2)
@@ -36,7 +41,9 @@ class MainScreen(BaseScreen):
         self.event3 = Clock.schedule_interval(self.update_values, 0.01)
 
     def update_time(self, obj):
-        self.time = datetime.datetime.now().strftime("%I:%M:%S %p")
+        self.time = datetime.datetime.now().strftime("%I:%M:%S %p") 
+        # tz = pytz.timezone(self.time_zone) 
+        # self.time = datetime.datetime.now(tz).strftime("%I:%M:%S %p")
 
     def update_values(self, obj):
         self.sensor.get_header_data()
@@ -48,6 +55,12 @@ class MainScreen(BaseScreen):
             self.event3.cancel()
         except:
             pass
+    
+    # def find_time_zone(self):
+    #     self.sensor.get_header_data()
+    #     sensor_data = self.sensor.get_sensor_data()
+    #     obj = TimezoneFinder()
+    #     return obj.timezone_at(lat = sensor_data["Location"][0], lng = sensor_data["Location"][1])
 
     def on_leave(self):
         self.event.cancel()

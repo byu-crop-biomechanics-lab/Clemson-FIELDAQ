@@ -39,6 +39,14 @@ class TestDetailScreen(BaseScreen):
     pot_angle = []
     imu_angle = []
     force_app = []
+    notes = []
+
+    def __init__(self, **kwargs):
+        super(BaseScreen, self).__init__(**kwargs)
+        def gui_init(dt):
+            self.test_notes_screen = self.manager.get_screen('test_notes_screen')
+            self.parent_screen = self
+        Clock.schedule_once(gui_init)
 
     def find_max_x_load(self):
         max = 0
@@ -50,7 +58,8 @@ class TestDetailScreen(BaseScreen):
         sensor = Sensor()
         sensor.clear_gps_memory()
         self.screenTitle = self.ids['testTitle']
-
+        
+  
     def on_enter(self):
 
         self.graph = self.ids['graph_test']
@@ -70,15 +79,22 @@ class TestDetailScreen(BaseScreen):
                     self.force_app.append(row[3])
                 if str(row[0]) == 'TIME (milliseconds)' and testData == 0:
                     testData = 1
-        print(len(self.imu_angle))
+                
+                if 'POST' in row[0]:
+                    if len(row[1]) !=0:
+                        self.notes.append(str(row[1]))
+
+        # Set the data
+        self.ids['test_notes'].list_data = self.notes
+
         self.imu_points = [(float(self.imu_angle[i]), float(self.force_app[i])) for i in range(0, len(self.imu_angle))]
         self.imuXmax = math.ceil(max(float(self.imu_angle[i]) for i in range(0, len(self.imu_angle)))/10)*10
         self.imuXmajor = int(self.imuXmax/5)
-        self.imu_title = 'Test Details (X Load and IMU Data)'
+        self.imu_title = 'X Load and IMU Data'
         self.pot_points = [(float(self.pot_angle[i]), float(self.force_app[i])) for i in range(0, len(self.pot_angle))]
         self.potXmax = math.ceil(max(float(self.pot_angle[i]) for i in range(0, len(self.pot_angle)))/10)*10
         self.potXmajor = int(self.potXmax/5)
-        self.pot_title = 'Test Details (X Load and Potentiometer Data)'
+        self.pot_title = 'X Load and Potentiometer Data'
         self.x_max = self.potXmax
         self.x_major = self.potXmajor
         self.y_max = math.ceil(max(float(self.force_app[i]) for i in range(0, len(self.force_app)))/15)*15
@@ -112,3 +128,8 @@ class TestDetailScreen(BaseScreen):
     def on_leave(self):
         self.graph.remove_plot(self.results_plot)
         self.graph._clear_buffer()
+        self.notes = []
+    
+    def update_notes(self):
+        self.test_notes_screen.set_file(self.fileName)
+        super(TestDetailScreen, self).move_to('test_notes_screen')

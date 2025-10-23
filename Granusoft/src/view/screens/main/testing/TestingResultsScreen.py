@@ -86,6 +86,9 @@ class TestingResultsScreen(BaseScreen):
         self.xlabel = 'Pot Angle (deg)'
         self.xmajor = self.x_major
         self.xmax = self.x_max
+        if self.graph.plots:
+            self.graph.remove_plot(self.graph.plots[0])
+
 
         self.graph.add_plot(self.plot)
 

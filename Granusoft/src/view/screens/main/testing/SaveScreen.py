@@ -14,6 +14,11 @@ try:
 except:
     pass
 
+from getmac import get_mac_address as gma
+
+#import pytz
+#from timezonefinder import TimezoneFinder
+
 Builder.load_file('view/screens/main/testing/SaveScreen.kv')
 
 
@@ -36,6 +41,17 @@ class SaveScreen(BaseScreen):
         barcode = self.ids['barcode']
         barcode.focus = True
 
+    # def find_time_zone(self):
+    #     sensor = Sensor()
+    #     sensor.get_header_data()
+    #     sensor_data = sensor.get_sensor_data()
+    #     obj = TimezoneFinder()
+    #     return obj.timezone_at(lat = sensor_data["Location"][0], lng = sensor_data["Location"][1])
+
+    def current_time(self):
+            # tz = pytz.timezone(self.find_time_zone()) 
+            return datetime.datetime.now().strftime("%H:%M:%S")
+
     def save_test(self):
         """Save all test data to csv file"""
         barcode = self.ids['barcode']
@@ -55,6 +71,9 @@ class SaveScreen(BaseScreen):
 
         # Sets the filename to save the csv file as
         folder_name = 'Tests/'+str(config.get('folder', 0))
+
+        #get mac address
+        mac_address = gma()
 
         #try:
         config.set('curr_test_num', (config.get('curr_test_num', 0) + 1))
@@ -80,7 +99,7 @@ class SaveScreen(BaseScreen):
         with open(filename, 'w+', newline='') as csvFile:
             writer = csv.writer(csvFile)
             writer.writerow(['----------META DATA----------'])
-            writer.writerow(['SOFTWARE VERSION', '2.3.0'])
+            writer.writerow(['SOFTWARE VERSION', '2.3.0','DEVICE MAC ADDRESS',mac_address])
             writer.writerow(
                 ['DEVICE OPERATOR', str(config.get('operator', 0))])
             writer.writerow(['----------TEST ATTRIBUTES----------'])
@@ -89,7 +108,7 @@ class SaveScreen(BaseScreen):
             writer.writerow(['MONTH', dt.strftime("%m")])
             writer.writerow(['DAY', dt.strftime("%d")])
             writer.writerow(
-                ['TIME', dt.strftime("%H:%M:%S"), 'Local Time Zone'])
+                ['TIME', self.current_time(), 'Local Time'])
             writer.writerow(['PLOT', str(config.get('plot_num', 0)), '#'])
             writer.writerow(['HEIGHT', str(config.get('height', 0)), 'cm'])
             writer.writerow(['BARCODE', str(barcode.text)])

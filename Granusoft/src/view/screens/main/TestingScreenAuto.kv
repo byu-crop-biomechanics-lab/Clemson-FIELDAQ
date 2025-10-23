@@ -12,35 +12,6 @@
             pos: self.pos
             size: self.size
 
-<HeightChangeConfirmDialog>:
-    size_hint: (0.55, 0.77)
-    markup: True
-    bold: True
-    title: 'LOAD CELL HEIGHT CHANGE'
-    title_align: 'center'
-    title_size: '26sp'
-
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            font_size: 26
-            markup: True
-            bold: True
-            halign: 'left'
-            text: "You Are About Change the Load Cell Height, Continue?"
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint_y: None
-            size_hint_x: 1
-            height: 65
-            NavButton:
-                text: "NO"
-                on_release: root.cancel()
-            NavButton:
-                text: "YES"
-                on_release: root.pathSelector()
-
-
 <TestingScreenAuto>:
 	name: 'testing_screen_auto'
     GranuContainer:
@@ -52,8 +23,7 @@
             GranuSideButton:
                 text: "Start"
                 on_release:
-                    root.check_height_change()
-                    root.move_to(root.next_screen) # Move to test in progress screen
+                    root.move_to('height_change_confirmation') # Move to test in progress screen
             GranuSideButton:
                 text: "Tests"
                 on_release:

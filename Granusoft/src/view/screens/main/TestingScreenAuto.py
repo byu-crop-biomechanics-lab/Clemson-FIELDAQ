@@ -17,15 +17,14 @@ import configurator as config
 from view.elements import *
 
 import datetime
+import os
+# import pytz
+# from timezonefinder import TimezoneFinder
 
 Builder.load_file('view/screens/main/TestingScreenAuto.kv')
 
 ONE_SEC = 1
 HEIGHT_INTERVAL = 0.004
-
-class HeightChangeConfirmDialog(Popup):
-    cancel = ObjectProperty(None)
-    proceed = ObjectProperty(None)
 
 
 class TestingScreenAuto(BaseScreen):
@@ -35,6 +34,7 @@ class TestingScreenAuto(BaseScreen):
     plot = StringProperty("N/A")
     operator = StringProperty("N/A")
     time = StringProperty("N/A")
+    # time_zone = StringProperty("N/A")
     current_date = StringProperty("N/A")
     date_time = StringProperty("N/A")
     folder = StringProperty("N/A")
@@ -46,6 +46,7 @@ class TestingScreenAuto(BaseScreen):
     def on_pre_enter(self):
         """Before the Screen loads, read the configuration file to get the current
         list of notes. Show the default buttons."""
+        # self.time_zone = self.find_time_zone()
         self.event = Clock.schedule_interval(self.update_time, ONE_SEC)
         self.event2 = Clock.schedule_interval(self.update_height, HEIGHT_INTERVAL)
         self.load_cell_height = self.get_load_cell_sensor_height()
@@ -53,7 +54,6 @@ class TestingScreenAuto(BaseScreen):
         self.plot = str(config.get('plot_num', 0))
         self.operator = str(config.get('operator', 'N/A'))
         self.folder = str(config.get('folder', 'N/A'))
-        self.time = datetime.datetime.now().strftime("%I:%M %p")
         self.current_date = datetime.date.today().strftime("%d/%m/%Y")
         # Get notes from config file
         notes = config.get('notes', {
@@ -65,8 +65,15 @@ class TestingScreenAuto(BaseScreen):
         self.ids['pretest'].list_data = notes["pretest"]
         self.ids['posttest'].list_data = notes["posttest"]
 
-    def update_time(self, obj):
-        self.time = datetime.datetime.now().strftime("%I:%M %p")
+    # def find_time_zone(self):
+    #     self.sensor.get_header_data()
+    #     sensor_data = self.sensor.get_sensor_data()
+    #     obj = TimezoneFinder()
+    #     return obj.timezone_at(lat = sensor_data["Location"][0], lng = sensor_data["Location"][1])
+
+    def update_time(self,obj):
+        # tz = pytz.timezone(self.time_zone) 
+        self.time = datetime.datetime.now().strftime("%I:%M:%S %p")
         self.date_time = self.current_date+": "+self.time
 
     def update_height(self,obj):
@@ -79,35 +86,11 @@ class TestingScreenAuto(BaseScreen):
         sensor_data = self.sensor.get_sensor_data(0)
         return str("%.2f" % sensor_data["Load Cell Height"])
 
-
-    def save_new_height(self):
-        config.set('height', float(self.load_cell_height))
-        self.next_screen = 'test_in_progress_screen'
-
-    def check_height_change(self):
-        current_height = float(config.get('height', 0))
-        difference = 2.5
-        new_height = float(self.load_cell_height) 
-        if new_height > current_height + difference or new_height < current_height - difference:
-            self.height_change_popup()
-        else:
-            config.set('height', float(self.load_cell_height))
-            self.next_screen = 'test_in_progress_screen'
-
-
-    def height_change_popup(self):
-        self._popup = HeightChangeConfirmDialog(cancel=self.dismiss_popup, proceed=self.save_new_height)
-        self._popup.open()
-
-    def dismiss_popup(self):
-        self.next_screen = 'testing_screen_auto'
-        self._popup.dismiss()
-
-    def export_tests(self, obj):
-            if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
-                try:
-                    os.system("sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /mnt/usbStick")
-                except:
-                    print("USB Not Mounted")
-            self._popup = SaveConfirmDialog(save=self.usbSave, pathSelector=self.pathSelector, cancel=self.dismiss_popup)
-            self._popup.open()
+    # def export_tests(self, obj):
+    #         if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
+    #             try:
+    #                 os.system("sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /mnt/usbStick")
+    #             except:
+    #                 print("USB Not Mounted")
+    #         self._popup = SaveConfirmDialog(save=self.usbSave, pathSelector=self.pathSelector, cancel=self.dismiss_popup)
+    #         self._popup.open()
