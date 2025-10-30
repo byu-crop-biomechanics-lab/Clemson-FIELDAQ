@@ -133,7 +133,7 @@ class SaveScreen(BaseScreen):
                 config.get('break_height', 0)), 'cm'])
             writer.writerow(['LCA_WEIGTH', '0', 'g'])
             writer.writerow(
-                ['----------SENSOR CALIBRATION DATA (stored_value*A + B = raw_data)------'])
+                ['----------SENSOR CALIBRATION DATA (ADC*A + B = stored_value)------'])
             writer.writerow(['SENSOR', 'A', 'B', 'UNIT', 'ID'])
             for j in range(len(self.NAMES)):
                 try:
