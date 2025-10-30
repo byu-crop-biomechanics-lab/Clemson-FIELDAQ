@@ -28,7 +28,7 @@ from kivy.garden.graph import Graph, MeshLinePlot
 
 Builder.load_file('view/screens/main/testing/TestFoldersScreen.kv')
 
-FOLDERNAME = "Tests/"+config.get('selected_folder',0)
+FOLDERNAME = "Tests/"+str(config.get('selected_folder',0))
 
 class Folder(SingleSelectableListBehavior, Label):
     pass

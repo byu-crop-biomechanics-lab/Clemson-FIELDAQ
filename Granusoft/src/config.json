@@ -1,8 +1,8 @@
 {
-    "selected_folder": "Stalk 9 From SIDE",
+    "selected_folder": "3rd-times-the-charm-flex-tests-10-24",
     "height": 83.5,
     "height_sensor": "OFF",
-    "folder": "Stalk 9 From SIDE",
+    "folder": "Eric Test",
     "folders": [
         "Test",
         "Test3",
@@ -89,10 +89,10 @@
         "Flex Tests Wooden Redos",
         "Weights Flat 1",
         "Weights Angle 1",
-        "Weights Angle 4.6 degrees",
         "Weights Flat 2",
         "Weights angle 4.6       -2",
-        "Stalk 9 From SIDE"
+        "Stalk 9 From SIDE",
+        "Eric Test"
     ],
     "notes": {
         "pretest": [
@@ -224,10 +224,10 @@
             "intercept": -1.6306954436450816
         }
     },
-    "unwanted_folder": "Test2",
+    "unwanted_folder": "Mail",
     "prev_height": 0,
     "plot_num": 1,
-    "curr_test_num": 420,
+    "curr_test_num": 1,
     "test_notes": {
         "pretest": [],
         "bank": [],

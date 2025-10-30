@@ -99,7 +99,8 @@ class SaveScreen(BaseScreen):
         with open(filename, 'w+', newline='') as csvFile:
             writer = csv.writer(csvFile)
             writer.writerow(['----------META DATA----------'])
-            writer.writerow(['SOFTWARE VERSION', '2.3.0','DEVICE MAC ADDRESS',mac_address])
+            writer.writerow(['SOFTWARE VERSION', '2.3.0'])
+            writer.writerow(['DEVICE MAC ADDRESS',mac_address])
             writer.writerow(
                 ['DEVICE OPERATOR', str(config.get('operator', 0))])
             writer.writerow(['----------TEST ATTRIBUTES----------'])
