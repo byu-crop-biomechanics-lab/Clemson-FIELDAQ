@@ -111,6 +111,7 @@ class SaveScreen(BaseScreen):
             writer.writerow(
                 ['TIME', self.current_time(), 'Local Time'])
             writer.writerow(['PLOT', str(config.get('plot_num', 0)), '#'])
+            writer.writerow(['TEST NUMBER', str(config.get('curr_test_num', 0)), '#'])
             writer.writerow(['HEIGHT', str(config.get('height', 0)), 'cm'])
             writer.writerow(['BARCODE', str(barcode.text)])
             writer.writerow(['LATITUDE', location[0], 'angular degrees'])
