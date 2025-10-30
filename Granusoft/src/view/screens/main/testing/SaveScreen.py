@@ -63,10 +63,11 @@ class SaveScreen(BaseScreen):
         # Prepare the notes
         notes = config.get('notes', {
             "pretest": [],
+            "posttest": [],
             "bank": []
         })
         pre_notes = notes["pretest"]
-        post_notes = ts.get_post_notes()
+        post_notes = notes["posttest"]#ts.get_post_notes()
         dt = datetime.datetime.now()
 
         # Sets the filename to save the csv file as
@@ -151,6 +152,20 @@ class SaveScreen(BaseScreen):
                     [(ds.timestamp * 1000), ds.pot_angle, ds.imu_angle, ds.x_load, ds.y_load])
 
         csvFile.close()
+
+        #moves all the post test notes back to the bank
+        notes = config.get('notes', {
+            "pretest": [],
+            "posttest": [],
+            "bank": []
+        })
+
+        config.set('notes', {
+            "pretest": notes["pretest"],
+            "posttest": [],
+            "bank": notes["bank"] + notes["posttest"]
+        })
+
 
 
     def check_height_sensor_status(self):

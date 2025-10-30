@@ -47,6 +47,7 @@ class TestingScreen(BaseScreen):
         self.operator = str(config.get('operator', 'N/A'))
         self.folder = str(config.get('folder', 'N/A'))
         self.current_date = datetime.date.today().strftime("%d/%m/%Y")
+
         # Get notes from config file
         notes = config.get('notes', {
             "pretest": [],

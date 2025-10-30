@@ -123,3 +123,17 @@ class TestingResultsScreen(BaseScreen):
             self.next_screen = 'testing_screen_auto'
         else:
             self.next_screen = 'testing_screen'
+
+    def clear_post_test_notes(self):
+        """Puts post test notes back to bank"""
+        notes = config.get('notes', {
+            "pretest": [],
+            "posttest": [],
+            "bank": []
+        })
+
+        config.set('notes', {
+            "pretest": notes["pretest"],
+            "posttest": [],
+            "bank": notes["bank"] + notes["posttest"]
+        })
