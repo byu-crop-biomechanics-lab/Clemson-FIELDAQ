@@ -1,5 +1,5 @@
 {
-    "selected_folder": "3rd-times-the-charm-flex-tests-10-24",
+    "selected_folder": "Eric Test",
     "height": 83.5,
     "height_sensor": "OFF",
     "folder": "Eric Test",
@@ -67,7 +67,6 @@
         "7.01.24_VR_NS_R2",
         "7.10.24_RY_S_R2",
         "7.10.24_RY_NS_R2",
-        "3rd-times-the-charm-flex-tests-10-24",
         "flex_tests_oct28",
         "TEST_RUN",
         "MED_TESTS_RUN",
@@ -174,10 +173,10 @@
             "intercept": -1.6306954436450816
         }
     },
-    "unwanted_folder": "Mail",
+    "unwanted_folder": "3rd-times-the-charm-flex-tests-10-24",
     "prev_height": 0,
     "plot_num": 50,
-    "curr_test_num": 22,
+    "curr_test_num": 26,
     "test_notes": {
         "pretest": [],
         "bank": [],

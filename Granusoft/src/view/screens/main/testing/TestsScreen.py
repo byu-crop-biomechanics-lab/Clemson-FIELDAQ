@@ -56,7 +56,8 @@ class NoUsbDialog(Popup):
     cancel = ObjectProperty(None)
 
 class TestsScreen(BaseScreen):
-    USB_TEST_FOLDERS_PATH = '/mnt/usbStick'
+    #USB_TEST_FOLDERS_PATH = '/tmp/usbStick'  #is to test on local machine. You will have to create this folder manually for testing."mkdir -p /tmp/usbStick"
+    USB_TEST_FOLDERS_PATH = '/mnt/usbStick' #Is for the rasberry pi
 
     def __init__(self, **kwargs):
         super(BaseScreen, self).__init__(**kwargs)
@@ -95,6 +96,7 @@ class TestsScreen(BaseScreen):
         if not os.path.ismount(self.USB_TEST_FOLDERS_PATH):
             try:
                 os.system("sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /mnt/usbStick")
+                #print("Skipping USB mount for testing")
             except:
                 print("USB Not Mounted")
         self._popup = SaveConfirmDialog(save=self.usbSave, pathSelector=self.pathSelector, cancel=self.dismiss_popup)
@@ -120,8 +122,8 @@ class TestsScreen(BaseScreen):
     def save(self, path):
         dt = datetime.datetime.now()
         configName = 'config_' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '.txt'
-        subFold = 'Tests_' + dt.strftime('%Y_%m_%d')
-        foldername = config.get('selected_folder',0)
+        foldername = config.get('selected_folder',0)        
+        subFold = 'Tests_' + dt.strftime('%Y_%m_%d') + '_' + foldername
         try:
             if not os.path.exists(path+'/'+subFold):
                 os.makedirs(path + '/' + subFold)
@@ -132,19 +134,17 @@ class TestsScreen(BaseScreen):
             config.save_as(os.path.join(path + '/' + subFold, configName))
             for name in self.test_filenames:
                 if name != '.gitignore':
-                    copyfile('Tests/' + foldername+'/'+ name, path + '/' + subFold + "/" + name)
-                    # os.remove('Tests/' + name)
-                    os.rename('Tests/' + name, 'TestArchive/' + subFold + '/' + name)
-                self.dismiss_popup()
+                    copyfile('Tests/' + foldername+'/'+ name, path + '/' + subFold + "/" + name )
+                    os.rename('Tests/' +foldername+ '/' + name, 'TestArchive/' + subFold + '/' + name)
+            self.dismiss_popup()
         except:
             config.save_as(os.path.join(path, configName))
             for name in self.test_filenames:
                 if name != '.gitignore':
                     print(path)
                     copyfile('Tests/'+foldername+'/' + name, path + '/' + name)
-                    # os.remove('Tests/' + name)
                     os.rename('Tests/'+foldername+'/' + name, 'TestArchive/' + subFold + '/' + name)
-                self.dismiss_popup()
+            self.dismiss_popup()
         self.test_filenames = [f for f in listdir("Tests") if (isfile(join("Tests", f)) and f != ".gitignore")]
         self.ids['tests_list'].list_data = self.test_filenames
 
