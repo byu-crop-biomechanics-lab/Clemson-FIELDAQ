@@ -21,6 +21,7 @@ class RenameFolderScreen(BaseScreen):
         input.text = str(config.get('selected_folder', "Default Folder"))
         self.previous_name = input.text
         input.validate()
+        print(input.text)
 
     def on_enter(self):
         """Once the Screen loads, focus the TextInput"""
@@ -31,6 +32,7 @@ class RenameFolderScreen(BaseScreen):
         """Save button was pressed: save the new operator in the configuration file."""
         folder_list = config.get('folders',0)
         input = self.ids['folder']
+        print("Input folde??", input.text)
         valid = input.validate()
         if valid:
             os.rename('Tests/'+self.previous_name,"Tests/"+str(input.text))

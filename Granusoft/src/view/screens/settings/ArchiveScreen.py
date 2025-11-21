@@ -65,15 +65,17 @@ class ArchiveScreen(BaseScreen):
         self.remove_button.bind(on_release = self.remove_tests)
         self.export_button = GranuSideButton(text = 'Export\nAll')
         self.export_button.bind(on_release = self.export_tests)
-        self.test_details_button = GranuSideButton(text = 'Test\nDetails')
+        self.test_details_button = GranuSideButton(text = 'Archived Test\nDetails')
         self.test_details_button.bind(on_release = self.test_details)
 
     def on_pre_enter(self):
-        self.test_filenames = [f for f in listdir("TestArchive") if (isfile(join("TestArchive", f)) and f != ".gitignore")]
+        foldername = "TestArchive/"+config.get('selected_folder',0)
+        self.test_filenames = [f for f in listdir(foldername) if (isfile(join(foldername, f)) and f != ".gitignore")]
 
         self.default_buttons()
 
         self.ids['tests_list'].list_data = self.test_filenames
+        self.test_list = self.ids['tests_list']
 
     def go_back(self, obj):
         super(ArchiveScreen, self).back()
@@ -113,7 +115,8 @@ class ArchiveScreen(BaseScreen):
     def save(self, path):
         dt = datetime.datetime.now()
         configName = 'config_' + dt.strftime('%Y_%m_%d_%H_%M_%S') + '.txt'
-        subFold = 'Tests_' + dt.strftime('%Y_%m_%d')
+        foldername=config.get('selected_folder',0)
+        subFold = 'Archived_Tests_' + dt.strftime('%Y_%m_%d') + '_' + foldername
         try:
             if not os.path.exists(path+'/'+subFold):
                 os.makedirs(path + '/' + subFold)
@@ -123,14 +126,14 @@ class ArchiveScreen(BaseScreen):
             config.save_as(os.path.join(path + '/' + subFold, configName))
             for name in self.test_filenames:
                 if name != '.gitignore':
-                    copyfile('TestArchive/' + name, path + '/' + subFold + "/" + name)
+                    copyfile('TestArchive/' + foldername+'/'+ name, path + '/' + subFold + "/" + name )
                     # os.remove('TestArchive/' + name)
                 self.dismiss_popup()
         except:
             config.save_as(os.path.join(path, configName))
             for name in self.test_filenames:
                 if name != '.gitignore':
-                    copyfile('TestArchive/' + name, path + "/" + name)
+                    copyfile('TestArchive/' + foldername+'/'+ name, path + '/' + subFold + "/" + name )
                     # os.remove('TestArchive/' + name)
                 self.dismiss_popup()
         self.test_filenames = [f for f in listdir("Tests") if (isfile(join("Tests", f)) and f != ".gitignore")]

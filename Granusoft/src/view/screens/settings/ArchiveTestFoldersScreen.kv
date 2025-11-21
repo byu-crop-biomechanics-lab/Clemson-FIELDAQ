@@ -1,0 +1,35 @@
+<ArchiveFolder>
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<ArchiveFolderList>
+    viewclass: 'Note'
+    SingleSelectableRecycleBoxLayout:
+
+<ArchiveNavButton@Button>:
+    font_size: 26
+    halign: 'center'
+    valign: 'middle'
+    markup: True
+    bold: True
+
+<ArchiveTestFoldersScreen>:
+	name: 'archive_testing_folders_screen'
+    GranuContainer:
+        GranuSideArea:
+            id: folders_buttons
+        GranuContent:
+            GranuTitle:
+                text: 'Archived Folders'
+            BoxLayout:
+                orientation: 'horizontal'
+                ArchiveFolderList:
+                    id: folders_list
+                    on_interaction:
+                        root.folder_buttons()
+                    on_deselect_all:
+                        root.default_folders_buttons()

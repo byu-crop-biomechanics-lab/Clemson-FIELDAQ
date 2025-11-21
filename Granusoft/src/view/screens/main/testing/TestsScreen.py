@@ -77,7 +77,6 @@ class TestsScreen(BaseScreen):
     def on_pre_enter(self):
         foldername = "Tests/"+config.get('selected_folder',0)
         self.test_filenames = [f for f in listdir(foldername) if (isfile(join(foldername, f)) and f != ".gitignore")]
-
         self.default_buttons()
 
         self.ids['tests_list'].list_data = self.test_filenames
