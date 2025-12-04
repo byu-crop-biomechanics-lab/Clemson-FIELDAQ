@@ -5,10 +5,11 @@
 2. Clear the flash drive so their is nothing on it
 3. Copy the FIELDAQ folder over into the drive. (With the Clemson code, it is "FIELDAQ From ClemDarlingSMALL.img" folder you need to copy over. However, once it is copied over,you need to change the name to FIELDAQ)
 4. If there is already a FIELDAQ folder and you know the code is the same code you've been working on, the easiest thing to do is replace the file that you edited, instead of replacing the entire FIELDAQ folder
-5. Boot up the DARLING, then insert the flash drive into the DARLING
-6. Navigate to settings an hit the "Update with USB" button
-7. The screen will freeze. Wait until it unfreezes, then restart the DARLING
-8. Verify any changes
+5. Once the flash drive contains your new code, unmount if from your computer
+6. Boot up the DARLING, then insert the flash drive into the DARLING
+7. Navigate to settings an hit the "Update with USB" button
+8. The screen will freeze. Wait until it unfreezes, then restart the DARLING
+9. Verify any changes
 
 
 ### Method 2: Connecting to internet and pulling changes directly from github (Outdated)
