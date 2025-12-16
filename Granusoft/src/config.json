@@ -1,8 +1,8 @@
 {
-    "selected_folder": "Tests_2022_06_23",
+    "selected_folder": "Eric Test 3",
     "height": 83.5,
     "height_sensor": "OFF",
-    "folder": "Eric Test",
+    "folder": "Eric Test 3",
     "folders": [
         "Test",
         "Test3",
@@ -91,7 +91,8 @@
         "Weights Flat 2",
         "Weights angle 4.6       -2",
         "Stalk 9 From SIDE",
-        "Eric Test 23"
+        "Eric Test 23",
+        "Eric Test 3"
     ],
     "notes": {
         "pretest": [
@@ -176,7 +177,7 @@
     "unwanted_folder": "Tests_2022_03_04",
     "prev_height": 0,
     "plot_num": 50,
-    "curr_test_num": 26,
+    "curr_test_num": 39,
     "test_notes": {
         "pretest": [],
         "bank": [],

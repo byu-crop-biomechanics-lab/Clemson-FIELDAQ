@@ -88,7 +88,7 @@ class TestInProgressScreen(BaseScreen):
         self.second_counter += 1
         time_delta = datetime.datetime.now() - self.start_time
         total_time_passed = time_delta.seconds + (time_delta.microseconds * .000001)
-        self.test_time = time_delta.seconds
+        self.test_time = time_delta.seconds*4
         if self.second_counter >= SECOND_CAP/2:
             self.double_counter += 1
             self.second_counter = 0
