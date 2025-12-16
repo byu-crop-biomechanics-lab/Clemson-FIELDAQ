@@ -105,6 +105,7 @@ Fixing Bugs on hardware
 Welp. That concludes "The Poor Undergraduate's Guide for Surviving and Fixing Bugs in the DARLING Software". Hopefully you did indeed survive, and do survive as you continue to work on the software. And if you found this guide somewhat lacking at times. Oops. My bad. But feel free to make it better!. 
 
 Hasta la vista. 
+
 -A fellow poor undergraduate who spent a decent amount of time figuring out how to do all this. 
 
 
@@ -113,9 +114,13 @@ Answers
 
 These answers are accurate as of December 16th, 2025 when this was written. It could be that something as changed sense then. 
 Action Item 6: TestingScreen(.kv/.py) Found in Granusoft->src->view->screens->main folder
+
 Action Item 7: TestFoldersScreen(.kv/py) Found in Granusoft->src->view->screens->main->testing folder
+
 Action Item 8: TestingResultsScreen(.kv/py) Found in Granusoft->src->view->screens->main->testing folder
 
 Action Item 9: Edit line 38 of TestingScreen.kv from "text: 'Testing'" to "text: 'Testing Popcorn'"
+
 Action Item 12: Edit line 91 of TestInProgressScreen.py from "self.test_time = time_delta.seconds" to "self.test_time = time_delta.seconds*4"
+
 Action Item 13: Edit line 34 of TestinScreen.ky from "root.move_to('main_screen')" to "root.move_to('test_in_progress_screen')"
