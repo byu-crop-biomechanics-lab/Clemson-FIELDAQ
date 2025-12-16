@@ -8,12 +8,13 @@ For a mechanical engineering with a rudementary understanding of coding to be ab
 Outline
 --------
 
-    1. Get familiar with the BYU Crop Biomechanics Lab Github page
-    2. Set up the DARLING GUI on your computer
-    3. Learn how to navigate the code base. 
-    4. Fix bugs and upload them to the DARLING Devices
+1. Get familiar with the BYU Crop Biomechanics Lab Github page
+2. Set up the DARLING GUI on your computer
+3. Learn how to navigate the code base. 
+4. Fix bugs and upload them to the DARLING Devices
 
-1. Crop Biomechancis Github
+Crop Biomechancis Github
+--------
 
     -Since you are reading this, clearly you are on the BYU Crop Biomechanics Lab Github page. Good job. Are you on the Clemson-FIELDAQ repository? Again, clearly. Another win. The Clemson-FIELDAQ repository is where all of the magic is going to happen, so make sure you know how to get here and stay here. 
 
