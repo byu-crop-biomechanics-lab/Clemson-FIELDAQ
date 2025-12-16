@@ -57,6 +57,7 @@ class LiveFeedScreen(BaseScreen):
 
 
     def on_pre_enter(self):
+        print("I made it to Live Feed Screen")
         self.event = Clock.schedule_interval(self.update_values, INTERVAL)
         self.transition_to_state = "Pause"
         self.sensor.clear_gps_memory()
